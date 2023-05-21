@@ -3,7 +3,99 @@
   <head>
     <title>Weather or Not?</title>
   </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <body>
     <h1>Weather or Not?</h1>
+    <input type="text" id="cityname" />
+    <input type="text" id="countrycode" />
+    <script></script>
+    <script typetext="text/javascript">
+      var result = "2";
+      function makeApiCall() {
+        var city = document.getElementById("cityname").value;
+        var country = document.getElementById("countrycode").value;
+        console.log(
+          "Fetching document with city and country" + city + "" + country
+        );
+        fetch(
+          "https://api.openweathermap.org/data/2.5/weather?q=Ashburn,US&appid=8de466ce86a65fe3aaaa484b258340c6"
+        ).then((response) => {
+          console.log(response);
+
+          document.getElementById("my-div").innerHtml = response.json();
+        });
+      }
+      function consoleLog() {
+        console.log("Pressed");
+      }
+      console.log(result);
+    </script>
+    <div id="my-div"></div>
+    <!-- Problem is HERE -->
+    <button
+      texttype="text/javascript"
+      id="weatherButton"
+      class="button"
+      onclick="doFetch()"
+    >
+      Get Weather Data
+    </button>
+
+    <table>
+      <tr>
+        <td>Feels Like</td>
+        <td id="feels_like"></td>
+        <td>Max Temperature</td>
+        <td id="temp_max"></td>
+        <td>Min Temperature</td>
+        <td id="temp_min"></td>
+      </tr>
+    </table>
+
+    <script>
+      function doFetch() {
+        $("#weatherButton").click(function () {
+          $.get(
+            "https://api.openweathermap.org/data/2.5/weather?q=Ashburn,US&appid=8de466ce86a65fe3aaaa484b258340c6",
+            function (data, status) {
+              // console.log(data);
+              $("#feels_like").html(data.main.feels_like);
+              $("#temp_max").html(data.main.temp_max);
+              $("#temp_min").html(data.main.temp_min);
+              //alert("Data: " + data.base + "\nStatus: " + status);
+            }
+          );
+        });
+      }
+    </script>
+
+    <!--
+    <script>
+      postData("https://example.com/answer", { answer: 42 }).then((data) => {
+        console.log(data); // JSON data parsed by `data.json()` call
+      });
+
+      async function postData(url = "", data = {}) {
+        var URL =
+          "https://api.openweathermap.org/data/2.5/weather?q=Ashburn,US&appid=8de466ce86a65fe3aaaa484b258340c6";
+        // Default options are marked with *
+        const response = await fetch(URL, {
+          method: "GET", // *GET, POST, PUT, DELETE, etc.
+          mode: "no-cors", // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: "follow", // manual, *follow, error
+          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          //body: JSON.stringify(data), // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+      }
+    </script> -->
+
+    <!-- Problem is HERE -->
   </body>
 </html>
